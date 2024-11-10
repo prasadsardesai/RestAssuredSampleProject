@@ -42,7 +42,6 @@ public class LibraryAPITest {
 				.withQueryParam("AuthorName", "Vaibhavi Sardesai").get("");
 		Response response = apiUtils.getResponse();
 
-
 		Map<String, String> queryParams = new HashMap<String, String>();
 		queryParams.put("AuthorName", "Vaibhavi Sardesai");
 
@@ -125,42 +124,51 @@ public class LibraryAPITest {
 		}
 
 	}
-	
+
 	/**
-	 * API: Library API
-	 * Scenario:TC003_addBookScenario
+	 * API: Library API Scenario:TC003_addBookScenario
 	 * 
 	 * Description: Verify POST / add-book operation with valid data input
 	 * 
 	 */
-
-
 
 	@Test
 	public void TC003_addBook_Scenario() {
 
 		ExtentReportManager.startTest("Test Library API: POST /add-book operation with invalid data");
 
-		Library libraryObj= new Library("My Gujrati Book","acv0","88654","Vaibhavi Sardesai");
-		String request= JsonPathParser.convertToJson(libraryObj);
-		ApiUtils apiUtils = ApiUtils.init()
-				.setBaseUri("libraryapi")
-				.setBasePath(APIEndPoint.LIBRARY_PATH + "/GetBook.php")
-				.withBody(request)
-				.post();
+		Library libraryObj = new Library("My Gujrati Book", "acv0", "88654", "Vaibhavi Sardesai");
+		String request = JsonPathParser.convertToJson(libraryObj);
+		ApiUtils apiUtils = ApiUtils.init().setBaseUri("libraryapi")
+				.setBasePath(APIEndPoint.LIBRARY_PATH + "/GetBook.php").withBody(request).post();
 		Response response = apiUtils.getResponse();
+		ExtentReportManager.logRequest(apiUtils.getBaseUri("libraryapi"), APIEndPoint.LIBRARY_PATH + "/GetBook.php",
+				request);
+		ExtentReportManager.logInfo("Response Status Code: " + response.statusCode());
 
-
+		ExtentReportManager.logResponse(response);
 
 		try {
-			
 
+			// Verify status code
+			Assert.assertNotNull(response, "Response should not be Null");
+			Assert.assertEquals(response.getStatusCode(), 200, "Status mismatched.");
+			ExtentReportManager.logPass("Test passed: Status code is 200 as expected.");
+
+			// Verify the values in response are as expected
+			String actualMsg = JsonPathParser.getStringValue(response.asString(), "Msg");
+
+			Assert.assertEquals(actualMsg, "successfully added",
+					"Actual Message does not match with the expected Message");
+
+			String actualId = JsonPathParser.getStringValue(response.asString(), "ID");
+			Assert.assertNotNull(actualId, "ID field should not be Null");
+			ExtentReportManager.logPass("Test passed: Message content verified as expected.");
 		} catch (AssertionError e) {
 			ExtentReportManager.logFail("Test failed: " + e.getMessage());
-			throw e; 
+			throw e;
 		}
-		
-		
+
 	}
 
 	@AfterClass
