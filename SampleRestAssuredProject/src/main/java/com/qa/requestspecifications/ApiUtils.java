@@ -29,7 +29,7 @@ public class ApiUtils {
 
 	public ApiUtils() {
 
-		this.requestSpecification = RestAssured.given();
+		requestSpecification = RestAssured.given();
 	}
 
 	public static ApiUtils init() {

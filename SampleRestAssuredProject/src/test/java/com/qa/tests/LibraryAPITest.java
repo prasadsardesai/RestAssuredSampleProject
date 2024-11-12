@@ -17,11 +17,15 @@ import com.qa.requestspecifications.ApiUtils;
 import io.restassured.response.Response;
 
 public class LibraryAPITest {
+	
+	 private ApiUtils apiUtils;
+	private static final String BASE_URI = "libraryapi";
 
 	@BeforeClass
 	public void setUp() {
 
 		ExtentReportManager.initReports();
+		apiUtils = ApiUtils.init().setBaseUri(BASE_URI);
 	}
 
 	/**
@@ -37,7 +41,7 @@ public class LibraryAPITest {
 
 		ExtentReportManager.startTest("Test Library API: Get /book-by-authorname operation with valid data");
 
-		ApiUtils apiUtils = ApiUtils.init().setBaseUri("libraryapi")
+		apiUtils
 				.setBasePath(APIEndPoint.LIBRARY_PATH + "/GetBook.php")
 				.withQueryParam("AuthorName", "Vaibhavi Sardesai").get("");
 		Response response = apiUtils.getResponse();
@@ -90,9 +94,9 @@ public class LibraryAPITest {
 
 		ExtentReportManager.startTest("Test Library API: Get /book-by-authorname operation with invalid data");
 
-		ApiUtils apiUtils = ApiUtils.init().setBaseUri("libraryapi")
-				.setBasePath(APIEndPoint.LIBRARY_PATH + "/GetBook.php").withQueryParam("AuthorName", "Donald Trump")
-				.get("");
+		apiUtils.setBasePath(APIEndPoint.LIBRARY_PATH + "/GetBook.php")
+		.withQueryParam("AuthorName", "Donald Trump")
+		.get("");
 		Response response = apiUtils.getResponse();
 
 		Map<String, String> queryParams = new HashMap<String, String>();
@@ -139,8 +143,8 @@ public class LibraryAPITest {
 
 		Library libraryObj = new Library("My Test Book", "auv01", "87948", "C B Sardesai");
 		String request = JsonPathParser.convertToJson(libraryObj);
-		ApiUtils apiUtils = ApiUtils.init().setBaseUri("libraryapi")
-				.setBasePath(APIEndPoint.LIBRARY_PATH + "/Addbook.php").withBody(request).post();
+		apiUtils.setBasePath(APIEndPoint.LIBRARY_PATH + "/Addbook.php")
+		.withBody(request).post();
 		Response response = apiUtils.getResponse();
 		ExtentReportManager.logRequest(apiUtils.getBaseUri("libraryapi"), APIEndPoint.LIBRARY_PATH + "/Addbook.php",
 				request);
@@ -175,12 +179,7 @@ public class LibraryAPITest {
 
 	}
 
-	@AfterClass
-	public void tearDown() {
 
-		ExtentReportManager.endTest();
-	}
-	
 	
 	/**
 	 * API: Library API Scenario:TC004_deleteBookScenario
@@ -198,8 +197,8 @@ public class LibraryAPITest {
 
 		Library libraryObj = new Library("My Test Book", "auv01", "87948", "C B Sardesai");
 		String request = JsonPathParser.convertToJson(libraryObj);
-		ApiUtils apiUtils = ApiUtils.init().setBaseUri("libraryapi")
-				.setBasePath(APIEndPoint.LIBRARY_PATH + "/Addbook.php").withBody(request).post();
+		 apiUtils.setBasePath(APIEndPoint.LIBRARY_PATH + "/Addbook.php")
+		 .withBody(request).post();
 		Response response = apiUtils.getResponse();
 		ExtentReportManager.logRequest(apiUtils.getBaseUri("libraryapi"), APIEndPoint.LIBRARY_PATH + "/Addbook.php",
 				request);
@@ -263,5 +262,12 @@ public class LibraryAPITest {
 		}
 
 	}
+	
+	@AfterClass
+	public void tearDown() {
+
+		ExtentReportManager.endTest();
+	}
+	
 
 }

@@ -1,0 +1,14 @@
+<!DOCTYPE suite >
+<suite name="SimpleAPITestSuite" verbose="1">
+    <test name="APITests">
+        <classes>
+            <class name="com.qa.tests.LibraryAPITest">
+                <methods>
+                    <!-- Specify the test method name you want to run -->
+                    <include name="TC004_deleteBook_Scenario" />
+                    <exclude name="TC002_getBookByAuthorName_NegativeScenario" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
