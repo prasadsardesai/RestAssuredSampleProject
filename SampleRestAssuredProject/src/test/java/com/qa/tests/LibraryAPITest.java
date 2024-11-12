@@ -147,7 +147,7 @@ public class LibraryAPITest {
 		.withBody(request).post();
 		Response response = apiUtils.getResponse();
 		ExtentReportManager.logRequest(apiUtils.getBaseUri("libraryapi"), APIEndPoint.LIBRARY_PATH + "/Addbook.php",
-				request);
+				JsonPathParser.prettyPrint(request));
 		ExtentReportManager.logInfo("Response Status Code: " + response.statusCode());
 
 		ExtentReportManager.logResponse(response);
@@ -201,7 +201,7 @@ public class LibraryAPITest {
 		 .withBody(request).post();
 		Response response = apiUtils.getResponse();
 		ExtentReportManager.logRequest(apiUtils.getBaseUri("libraryapi"), APIEndPoint.LIBRARY_PATH + "/Addbook.php",
-				request);
+				JsonPathParser.prettyPrint(request));
 		ExtentReportManager.logInfo("Response Status Code: " + response.statusCode());
 
 		ExtentReportManager.logResponse(response);
@@ -236,7 +236,7 @@ public class LibraryAPITest {
 					
 		Response response2 = apiUtilss.getResponse();
 		ExtentReportManager.logRequest(apiUtilss.getBaseUri("libraryapi"), APIEndPoint.LIBRARY_PATH + "/DeleteBook.php",
-				deleteReq);
+				JsonPathParser.prettyPrint(deleteReq));
 		ExtentReportManager.logInfo("Response Status Code: " + response2.statusCode());
 
 		ExtentReportManager.logResponse(response2);

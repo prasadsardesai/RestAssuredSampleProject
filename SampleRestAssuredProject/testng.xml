@@ -5,8 +5,11 @@
             <class name="com.qa.tests.LibraryAPITest">
                 <methods>
                     <!-- Specify the test method name you want to run -->
+                    <include name="TC001_getBookByAuthorName_positiveScenario"/>
+                    <include name="TC002_getBookByAuthorName_NegativeScenario"/>
+                    <include  name="TC003_addBook_Scenario"/>
                     <include name="TC004_deleteBook_Scenario" />
-                    <exclude name="TC002_getBookByAuthorName_NegativeScenario" />
+                    
                 </methods>
             </class>
         </classes>
