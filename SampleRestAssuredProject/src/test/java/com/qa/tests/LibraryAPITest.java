@@ -266,7 +266,11 @@ public class LibraryAPITest {
 	@AfterClass
 	public void tearDown() {
 
-		ExtentReportManager.endTest();
+	    try {
+            ExtentReportManager.endTest();
+        } catch (Exception e) {
+            System.err.println("Error ending Extent Report: " + e.getMessage());
+        }
 	}
 	
 
